@@ -1,23 +1,27 @@
+#include <EEPROM.h>
 #include <Wire.h>
 #include <Time.h>
 #include <DS1307RTC.h>
 #include <TM1636.h>
 
-// tlacitka
-#define KEY_DOWN  9
-#define KEY_UP	  10
-#define KEY_MENU  11
 
-#define ALARM_BUZZER 6
-#define ALARM_DURATION 500
-#define ALARM_TONE 1000
+// tlacitka
+const int KEY_DOWN = 9;
+const int KEY_UP = 10;
+const int KEY_MENU = 11;
+
+const int ALARM_BUZZER = 6;
+const int ALARM_DURATION = 500;
+const int ALARM_TONE = 1000; 
 
 TM1636 tm1636(7,8);
 
 // struktura pro cas
 tmElements_t tm;
 // obsah pro displej
+const int T_ADDRESS = 0;
 int8_t t[] = {0, 0, 0, 0};
+
 // pozice pro nastaveni cisla
 int menuPosition = -1; 
 // hodiny, minuty
@@ -30,6 +34,10 @@ void setup() {
   pinMode(KEY_UP, INPUT_PULLUP);
   pinMode(KEY_MENU, INPUT_PULLUP);
   pinMode(ALARM_BUZZER, OUTPUT);
+  
+  EEPROM.get(T_ADDRESS, t);
+  tm1636.point(POINT_ON);
+  tm1636.display(t);
   
   alarm();
 }
@@ -44,6 +52,7 @@ void loop() {
       if (menuPosition > 3) {
         menuPosition = -1;
       }
+      EEPROM.put(T_ADDRESS, t);
     }
   }
 
