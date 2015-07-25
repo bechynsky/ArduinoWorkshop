@@ -2,23 +2,28 @@ import processing.serial.*;
   
 Serial myPort;        // The serial port
 int xPos = 1;         // horizontal position of the graph
-  
+float yHeight = 0;
+
 void setup () {
   // set the window size:
-  size(400, 300);        
+  size(400, 300);
+  noLoop();
   
   myPort = new Serial(this, "COM7", 9600);
   // don't generate a serialEvent() unless you get a newline character:
   myPort.bufferUntil('\n');
   // set inital background:
   background(0);
+  stroke(255);
 }
 
 void draw () {
   // everything happens in the serialEvent()
+  line(xPos, height, xPos, height - yHeight);
 }
   
 void serialEvent (Serial myPort) {
+  
   // get the ASCII string:
   String inString = myPort.readStringUntil('\n');
   
@@ -30,13 +35,12 @@ void serialEvent (Serial myPort) {
   inString = trim(inString);
   println(inString);
   // convert to an int and map to the screen height:
-  float inByte = float(trim(inString)); 
+  yHeight = float(trim(inString)); 
   
-  inByte = map(inByte, -20, 40, 0, height);
+  yHeight = map(yHeight, -20, 40, 0, height);
 
   // draw the line:
-  stroke(127,34,255);
-  line(xPos, height, xPos, height - inByte);
+  redraw(); 
 
   // at the edge of the screen, go back to the beginning:
   if (xPos >= width) {
