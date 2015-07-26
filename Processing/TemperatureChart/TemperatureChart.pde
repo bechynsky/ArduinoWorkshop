@@ -3,6 +3,8 @@ import processing.serial.*;
 Serial myPort;        // The serial port
 int xPos = 1;         // horizontal position of the graph
 float yHeight = 0;
+int minTemperature = -20;
+int maxTemperature = 40;
 
 void setup () {
   // set the window size:
@@ -14,12 +16,27 @@ void setup () {
   myPort.bufferUntil('\n');
   // set inital background:
   background(0);
+  drawAxis();
   stroke(255);
 }
 
 void draw () {
   // everything happens in the serialEvent()
-  line(xPos, height, xPos, height - yHeight);
+  point(xPos, height - yHeight);
+}
+
+void drawAxis() {
+  stroke(127);
+  strokeWeight(4); 
+  line(0, height - mapValue(0), width, height - mapValue(0)); 
+  strokeWeight(1); 
+  for (int i = minTemperature; i < maxTemperature; i = i + 10) {
+    line(0, mapValue(i), width, mapValue(i));
+  }
+}
+
+float mapValue(float value) {
+  return map(value, minTemperature, maxTemperature, 0, height);
 }
   
 void serialEvent (Serial myPort) {
@@ -37,7 +54,7 @@ void serialEvent (Serial myPort) {
   // convert to an int and map to the screen height:
   yHeight = float(trim(inString)); 
   
-  yHeight = map(yHeight, -20, 40, 0, height);
+  yHeight = mapValue(yHeight);
 
   // draw the line:
   redraw(); 
@@ -45,7 +62,8 @@ void serialEvent (Serial myPort) {
   // at the edge of the screen, go back to the beginning:
   if (xPos >= width) {
     xPos = 0;
-    background(0); 
+    background(0);
+    drawAxis();
   } else {
     // increment the horizontal position:
     xPos++;
