@@ -11,8 +11,6 @@ const int KEY_UP = 10;
 const int KEY_MENU = 11;
 
 const int ALARM_BUZZER = 6;
-const int ALARM_DURATION = 500;
-const int ALARM_TONE = 1000; 
 
 TM1636 tm1636(7,8);
 
@@ -34,7 +32,8 @@ void setup() {
   pinMode(KEY_UP, INPUT_PULLUP);
   pinMode(KEY_MENU, INPUT_PULLUP);
   pinMode(ALARM_BUZZER, OUTPUT);
-  
+
+  // Pozor u starsich verzi Arduino IDE http://forum.arduino.cc/index.php?topic=312645
   EEPROM.get(T_ADDRESS, t);
   tm1636.point(POINT_ON);
   tm1636.display(t);
@@ -90,6 +89,8 @@ void loop() {
     
     if (h == ((t[0] * 10) + t[1]) && (m == ((t[2] * 10) + t[3]))) {
       alarm();
+    } else {
+      alarmStop();
     }
   }
   
@@ -119,10 +120,9 @@ void validateAlarmTime() {
 }
 
 void alarm() {
-  for (long i = 0; i < ALARM_DURATION * 1000L; i += ALARM_TONE * 2) {
     digitalWrite(ALARM_BUZZER, HIGH);
-    delayMicroseconds(ALARM_TONE);
+}
+
+void alarmStop() {
     digitalWrite(ALARM_BUZZER, LOW);
-    delayMicroseconds(ALARM_TONE);
-  }
 }
