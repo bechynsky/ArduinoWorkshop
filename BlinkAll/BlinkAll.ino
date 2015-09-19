@@ -3,11 +3,11 @@
 
 void setup() {
   // porty 2,3,4,5 jako vystup
-  DDRD |= B00111100;
+  DDRD |= 0b00111100;
 }
 
 void loop() {
   // preklopeni hodnot
-  PORTD ^= B00111100;
+  PORTD ^= 0b00111100;
   delay(PAUSE);
 }

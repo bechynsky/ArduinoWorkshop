@@ -15,9 +15,10 @@ void loop() {
   // sekundy jsou ulozeny v 1 byte
   Wire.requestFrom(DS1307_CTRL_ID, 1);
   int s = Wire.read();
-  // desitky sekund jsou v bite 4-6, je treba je posunout o 4 bite do prava
-  Serial.print(s >> 4);
-  // jednotky sekund jsou v bite 0-3, proto pouzijeme masku
+  Serial.println(s);
+  // desitky sekund jsou v bitech 4-6, je treba je posunout o 4 bity doprava
+  Serial.print((s & 0b01110000) >> 4);
+  // jednotky sekund jsou v bitech 0-3, proto pouzijeme masku
   Serial.println(s & 0b00001111);
   Wire.endTransmission();
   

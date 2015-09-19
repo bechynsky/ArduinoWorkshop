@@ -34,7 +34,7 @@ void LED(int addr, int data) {
   tm1636.stop();
 
   tm1636.start();
-  tm1636.writeByte(0x88);
+  tm1636.writeByte(0x28);
   tm1636.stop();
   
 }

@@ -11,7 +11,7 @@ void setup () {
   size(400, 300);
   noLoop();
   
-  myPort = new Serial(this, "COM7", 9600);
+  myPort = new Serial(this, "COM13", 9600);
   // don't generate a serialEvent() unless you get a newline character:
   myPort.bufferUntil('\n');
   // set inital background:
@@ -20,9 +20,12 @@ void setup () {
   stroke(255);
 }
 
+int last=0;
 void draw () {
   // everything happens in the serialEvent()
-  point(xPos, height - yHeight);
+  //point(xPos, height - yHeight);
+  line (xPos-1,last,xPos,height-yHeight);
+  last =floor(height-yHeight);
 }
 
 void drawAxis() {
@@ -61,7 +64,7 @@ void serialEvent (Serial myPort) {
 
   // at the edge of the screen, go back to the beginning:
   if (xPos >= width) {
-    xPos = 0;
+    xPos = 1;
     background(0);
     drawAxis();
   } else {

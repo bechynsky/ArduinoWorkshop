@@ -1,5 +1,6 @@
 #define KEY_UP		10
 #define KEY_DOWN	9
+// nutna podpora PWM na pinu
 #define LED             3
 
 int duty = 0;

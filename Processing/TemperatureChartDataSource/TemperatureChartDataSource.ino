@@ -12,7 +12,7 @@ void loop()
   temperature = getTemperature();
   Serial.print(temperature);
   Serial.print('\n');
-  delay(5000);
+  delay(2000);
 }
 
 float getTemperature()
