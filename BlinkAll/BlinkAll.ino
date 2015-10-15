@@ -10,7 +10,11 @@ void setup() {
 }
 
 void loop() {
-  // preklopeni hodnot
-  PORTD ^= MASK; //0b00111100;
+  //  preklopeni hodnot
+  //  PORTD ^= MASK; //0b00111100;
+  //  delay(PAUSE);
+  PORTD |= MASK; //0b00111100;
+  delay(PAUSE);
+  PORTD &= !MASK; //0b00111100;
   delay(PAUSE);
 }

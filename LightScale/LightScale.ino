@@ -1,14 +1,16 @@
 const byte SCALE_VALUE[] = { 0b00000100, 0b00001100, 0b00011100, 0b00111100};
 
+int senzor = A0;
+
 void setup() {
   Serial.begin(9600);
-  pinMode(A1, INPUT);
+  pinMode(senzor, INPUT);
   // porty 2,3,4,5 jako vystup
   DDRD |= 0b00111100;
 }
 
 void loop() {
-  int light = analogRead(A1);
+  int light = analogRead(senzor);
   Serial.println(light);
   
   int scale = map(light, 400, 800, 0, 3);

@@ -1,5 +1,5 @@
-#define LED 2
-#define PAUSE 1000
+const int LED = 2;
+const int PAUSE = 1000;
 
 void setup() {
   pinMode(LED, OUTPUT);
