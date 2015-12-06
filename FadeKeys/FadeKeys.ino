@@ -34,7 +34,7 @@ void loop() {
       if (duty < 0) duty = 0;
     }
   }
-  
+  Serial.println(duty);
   analogWrite(LED, duty);
   delay(50);
 }

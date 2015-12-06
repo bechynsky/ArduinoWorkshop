@@ -6,7 +6,6 @@
 TM1636 tm1636(7,8);
 
 void setup() {
-  Serial.begin(9600);
   tm1636.init();
 }
 

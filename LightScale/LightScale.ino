@@ -26,7 +26,7 @@ void loop() {
   }
 
   // zobrazit novou hodnotu
-  for (int i = 0; i < scale; i++) {
+  for (int i = 0; i < scale+1; i++) {
     digitalWrite(SCALE_PINS[i], HIGH);
   }
   
